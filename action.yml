@@ -1,0 +1,25 @@
+name: Sum
+description: Sum
+
+inputs:
+  x:
+    default: 0
+    required: true
+  y:
+    default: 0
+
+# steps.<step_id>.outputs.<output_name>
+outputs:
+  sum-result:
+    value: ${{steps.sum.outputs.result}}
+    description: sum result
+
+runs:
+  using: "composite" # must composite
+  steps:
+    - id: sum
+      shell: bash
+      run: echo "result=$((${{ inputs.x }} + ${{ inputs.y }}))" >> $GITHUB_OUTPUT
+
+# $GITHUB_OUTPUT = reserved name. environment file
+# https://docs.github.com/ko/actions/writing-workflows/choosing-what-your-workflow-does/workflow-commands-for-github-actions#setting-an-output-parameter
